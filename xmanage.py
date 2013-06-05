@@ -47,7 +47,7 @@ elif cmd=='restart-cms':
     do_cmd('./RESTART-GUNICORN-CMS')
 
 elif cmd=='update':
-    bash_command('cd mitx_all/xmanage; git pull')
+    bash_command('cd mitx_all/xmanage; git pull; chmod +x xmanage/*.py')
 
 elif cmd=='help':
     usage()
