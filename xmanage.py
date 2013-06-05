@@ -21,6 +21,8 @@ def usage():
     print "restart-cms    - restart the CMS (aka the Studio system)"
     print
     print "update         - update this management script (from central repo)"
+    print
+    print "help           - print out this message, as well as local NOTES.txt file"
 
 if len(sys.argv)<2:
     usage()
@@ -51,6 +53,11 @@ elif cmd=='update':
 
 elif cmd=='help':
     usage()
+    NOTES = "NOTES.txt"
+    if os.path.exists(NOTES):
+        print "----------------------------------------"
+        print "Notes file:"
+        print open(NOTES).read()
 
 else:
     print "Unknown command %s" % cmd
