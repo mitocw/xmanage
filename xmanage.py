@@ -19,6 +19,8 @@ def usage():
     print "                 This will force re-loading of course data"
     print
     print "restart-cms    - restart the CMS (aka the Studio system)"
+    print
+    print "update         - update this management script (from central repo)"
 
 if len(sys.argv)<2:
     usage()
@@ -43,6 +45,9 @@ if cmd=='restart-lms':
 
 elif cmd=='restart-cms':
     do_cmd('./RESTART-GUNICORN-CMS')
+
+elif cmd=='update':
+    bash_command('cd mitx_all/xmanage; git pull')
 
 elif cmd=='help':
     usage()
