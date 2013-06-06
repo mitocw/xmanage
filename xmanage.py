@@ -25,6 +25,7 @@ def usage():
     print "restart-consumer - restart the xqueue consumer"
     print
     print "activate <user>  - activate user specified by username <user>"
+    print "setstaff <user>  - make user (specified by username <user>) into staff"
     print
     print "update-mitx      - update mitx system code (use with care!)"
     print "update           - update this management script (from central repo)"
@@ -72,6 +73,12 @@ elif cmd=='activate':
     print "activating user %s" % uname
     do_cmd('./DJANGO-ADMIN activate_user %s' % uname)
     print "To complete the activation, please logout then log back in"
+
+elif cmd=='setstaff':
+    uname = sys.argv[avcnt]
+    print "making user %s staff" % uname
+    do_cmd('./DJANGO-ADMIN set_staff %s' % uname)
+    print "To complete conversion to staff, please logout then log back in"
 
 elif cmd=='update-mitx':
     bash_command('cd mitx_all/mitx; git pull')
