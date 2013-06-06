@@ -37,7 +37,8 @@ ROOT = "/home/vagrant/mitx_all"
 DIST = "mitx"
 
 def bash_command(cmd):
-    subprocess.Popen(['/bin/bash', '-c', cmd])
+    sp = subprocess.Popen(['/bin/bash', '-c', cmd])
+    sp.wait()
         
 def do_cmd(cmd):
     os.chdir(ROOT)
@@ -58,7 +59,8 @@ elif cmd=='restart-preview':
 
 elif cmd=='activate':
     uname = sys.argv[avcnt]
-    do_cmd('./DJANGO-ADMIN activate %s' % uname)
+    print "activating user %s" % uname
+    do_cmd('./DJANGO-ADMIN activate_user %s' % uname)
 
 elif cmd=='update':
     bash_command('cd mitx_all/xmanage; git pull; chmod +x *.py')
