@@ -15,17 +15,20 @@ def usage():
     print
     print "Commands available:"
     print
-    print "restart-lms     - restart the LMS (for vagrant boxes, running at http://192.168.42.2)"
-    print "                  This will force re-loading of course data"
-    print "restart-cms     - restart the CMS (aka the Studio system)"
-    print "restart-edge    - restart the Edge server (part of the Studio system)"
-    print "restart-preview - restart the Preview server (part of the Studio system)"
+    print "restart-lms      - restart the LMS (for vagrant boxes, running at http://192.168.42.2)"
+    print "                   This will force re-loading of course data"
+    print "restart-cms      - restart the CMS (aka the Studio system)"
+    print "restart-edge     - restart the Edge server (part of the Studio system)"
+    print "restart-preview  - restart the Preview server (part of the Studio system)"
     print
-    print "activate <user> - activate user specified by username <user>"
+    print "restart-xqueue   - restart the xqueue main system"
+    print "restart-consumer - restart the xqueue consumer"
     print
-    print "update-mitx     - update mitx system code (use with care!)"
-    print "update          - update this management script (from central repo)"
-    print "help            - print out this message, as well as local NOTES.txt file"
+    print "activate <user>  - activate user specified by username <user>"
+    print
+    print "update-mitx      - update mitx system code (use with care!)"
+    print "update           - update this management script (from central repo)"
+    print "help             - print out this message, as well as local NOTES.txt file"
 
 if len(sys.argv)<2:
     usage()
@@ -41,10 +44,10 @@ def bash_command(cmd):
     sp = subprocess.Popen(['/bin/bash', '-c', cmd])
     sp.wait()
         
-def do_cmd(cmd):
+def do_cmd(cmd, ddir=DIST):
     os.chdir(ROOT)
     #os.system('source STARTUP; cd %s; %s' % (DIST, cmd))
-    bash_command('source STARTUP; cd %s; %s' % (DIST, cmd))
+    bash_command('source STARTUP; cd %s; %s' % (ddir, cmd))
 
 if cmd=='restart-lms':
     do_cmd('./RESTART-GUNICORN')
@@ -57,6 +60,12 @@ elif cmd=='restart-edge':
 
 elif cmd=='restart-preview':
     do_cmd('./RESTART-GUNICORN-preview')
+
+elif cmd=='restart-consumer':
+    do_cmd('./RESTART-CONSUMER', ddir="xqueue")
+
+elif cmd=='restart-xqueue':
+    do_cmd('./RESTART-GUNICORN', ddir="xqueue")
 
 elif cmd=='activate':
     uname = sys.argv[avcnt]
