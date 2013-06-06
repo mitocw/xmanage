@@ -23,6 +23,7 @@ def usage():
     print
     print "activate <user> - activate user specified by username <user>"
     print
+    print "update-mitx     - update mitx system code (use with care!)"
     print "update          - update this management script (from central repo)"
     print "help            - print out this message, as well as local NOTES.txt file"
 
@@ -61,6 +62,9 @@ elif cmd=='activate':
     uname = sys.argv[avcnt]
     print "activating user %s" % uname
     do_cmd('./DJANGO-ADMIN activate_user %s' % uname)
+
+elif cmd=='update-mitx':
+    bash_command('cd mitx_all/mitx; git pull')
 
 elif cmd=='update':
     bash_command('cd mitx_all/xmanage; git pull; chmod +x *.py')
