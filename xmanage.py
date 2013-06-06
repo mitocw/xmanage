@@ -15,14 +15,16 @@ def usage():
     print
     print "Commands available:"
     print
-    print "restart-lms    - restart the LMS (for vagrant boxes, running at http://192.168.42.2)"
-    print "                 This will force re-loading of course data"
+    print "restart-lms     - restart the LMS (for vagrant boxes, running at http://192.168.42.2)"
+    print "                  This will force re-loading of course data"
+    print "restart-cms     - restart the CMS (aka the Studio system)"
+    print "restart-edge    - restart the Edge server (part of the Studio system)"
+    print "restart-preview - restart the Preview server (part of the Studio system)"
     print
-    print "restart-cms    - restart the CMS (aka the Studio system)"
+    print "activate <user> - activate user specified by username <user>"
     print
-    print "update         - update this management script (from central repo)"
-    print
-    print "help           - print out this message, as well as local NOTES.txt file"
+    print "update          - update this management script (from central repo)"
+    print "help            - print out this message, as well as local NOTES.txt file"
 
 if len(sys.argv)<2:
     usage()
@@ -47,6 +49,16 @@ if cmd=='restart-lms':
 
 elif cmd=='restart-cms':
     do_cmd('./RESTART-GUNICORN-CMS')
+
+elif cmd=='restart-edge':
+    do_cmd('./RESTART-GUNICORN-EDGE')
+
+elif cmd=='restart-preview':
+    do_cmd('./RESTART-GUNICORN-preview')
+
+elif cmd=='activate':
+    uname = sys.argv[avcnt]
+    do_cmd('./DJANGO-ADMIN activate %s' % uname)
 
 elif cmd=='update':
     bash_command('cd mitx_all/xmanage; git pull; chmod +x *.py')
