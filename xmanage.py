@@ -71,6 +71,7 @@ elif cmd=='activate':
     uname = sys.argv[avcnt]
     print "activating user %s" % uname
     do_cmd('./DJANGO-ADMIN activate_user %s' % uname)
+    print "To complete the activation, please logout then log back in"
 
 elif cmd=='update-mitx':
     bash_command('cd mitx_all/mitx; git pull')
