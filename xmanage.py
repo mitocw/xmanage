@@ -38,8 +38,15 @@ avcnt = 1
 cmd = sys.argv[avcnt]
 avcnt += 1
 
-ROOT = "/home/vagrant/mitx_all"
-DIST = "mitx"
+HOME = "/home/vagrant"
+
+if os.path.exists("%s/mitx_all" % HOME):
+    ROOT = HOMT + "/mitx_all"
+    DIST = "mitx"
+
+elif os.path.exists("%s/edx_all" % HOME):
+    ROOT = HOMT + "/edx_all"
+    DIST = "edx-platform"
 
 def bash_command(cmd):
     sp = subprocess.Popen(['/bin/bash', '-c', cmd])
