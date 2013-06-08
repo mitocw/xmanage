@@ -88,10 +88,10 @@ elif cmd=='setstaff':
     print "To complete conversion to staff, please logout then log back in"
 
 elif cmd=='update-mitx':
-    bash_command('cd mitx_all/mitx; git pull')
+    bash_command('cd %s/%s; git pull' % (ROOT, DIST))
 
 elif cmd=='update':
-    bash_command('cd mitx_all/xmanage; git pull; chmod +x *.py')
+    bash_command('cd %s/xmanage; git pull; chmod +x *.py' % ROOT)
 
 elif cmd=='help':
     usage()
