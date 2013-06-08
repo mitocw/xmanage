@@ -41,11 +41,11 @@ avcnt += 1
 HOME = "/home/vagrant"
 
 if os.path.exists("%s/mitx_all" % HOME):
-    ROOT = HOMT + "/mitx_all"
+    ROOT = HOME + "/mitx_all"
     DIST = "mitx"
 
 elif os.path.exists("%s/edx_all" % HOME):
-    ROOT = HOMT + "/edx_all"
+    ROOT = HOME + "/edx_all"
     DIST = "edx-platform"
 
 def bash_command(cmd):
