@@ -23,6 +23,10 @@ def usage():
     print
     print "restart-xqueue   - restart the xqueue main system"
     print "restart-consumer - restart the xqueue consumer"
+    print "restart-xserver  - restart the xserver (python code grader)"
+    print
+    print "logs <appname>   - view last 100 lines of log file for <appname>"
+    print "                   appname should be one of lms, cms, edge, preview, xserver, xqueue"
     print
     print "activate <user>  - activate user specified by username <user>"
     print "setstaff <user>  - make user (specified by username <user>) into staff"
@@ -39,6 +43,15 @@ cmd = sys.argv[avcnt]
 avcnt += 1
 
 HOME = "/home/vagrant"
+
+appinfo = {'lms': dict(dir='edx-platform', log='LOG.gunicorn'),
+           'cms': dict(dir='edx-platform', log='LOG.gunicorn.cms'),
+           'edge': dict(dir='edx-platform', log='LOG.gunicorn.edge'),
+           'preview': dict(dir='edx-platform', log='LOG.gunicorn.preview'),
+           'xserver': dict(dir='xserver', log='LOG.gunicorn'),
+           'consumer': dict(dir='xqueue', log='LOG.consumer'),
+           'xqueue': dict(dir='xqueue', log='LOG.gunicorn'),
+           }
 
 if os.path.exists("%s/mitx_all" % HOME):
     ROOT = HOME + "/mitx_all"
@@ -75,6 +88,9 @@ elif cmd=='restart-consumer':
 elif cmd=='restart-xqueue':
     do_cmd('./RESTART-GUNICORN', ddir="xqueue")
 
+elif cmd=='restart-xserver':
+    do_cmd('./RESTART-GUNICORN', ddir="xserver")
+
 elif cmd=='activate':
     uname = sys.argv[avcnt]
     print "activating user %s" % uname
@@ -86,6 +102,18 @@ elif cmd=='setstaff':
     print "making user %s staff" % uname
     do_cmd('./DJANGO-ADMIN set_staff %s' % uname)
     print "To complete conversion to staff, please logout then log back in"
+
+elif cmd=='logs':
+    app = sys.argv[avcnt]
+    avcnt += 1
+    opts = "-100"
+    if len(sys.argv)>=avcnt:
+        opts = ' '.join(sys.argv[avcnt:])
+    if not app in appinfo:
+        print "unknown appname %s" % app
+        print "known apps: " % appinfo.keys()
+    ai = appinfo[app]
+    bash_command('cd %s/%s; tail %s %s' % (ROOT, ai['dir'], opts, ai['log']))
 
 elif cmd=='update-mitx':
     bash_command('cd %s/%s; git pull' % (ROOT, DIST))
