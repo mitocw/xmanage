@@ -112,6 +112,8 @@ elif cmd=='logs':
     if not app in appinfo:
         print "unknown appname %s" % app
         print "known apps: " % appinfo.keys()
+        usage()
+        return
     ai = appinfo[app]
     bash_command('cd %s/%s; tail %s %s' % (ROOT, ai['dir'], opts, ai['log']))
 
