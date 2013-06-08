@@ -24,6 +24,7 @@ def usage():
     print "restart-xqueue   - restart the xqueue main system"
     print "restart-consumer - restart the xqueue consumer"
     print "restart-xserver  - restart the xserver (python code grader)"
+    print "restart-discern  - restart the discern (open ended response grading controller)"
     print
     print "logs <appname>   - view last 100 lines of log file for <appname>"
     print "                   appname should be one of lms, cms, edge, preview, xserver, xqueue"
@@ -90,6 +91,9 @@ elif cmd=='restart-xqueue':
 
 elif cmd=='restart-xserver':
     do_cmd('./RESTART-GUNICORN', ddir="xserver")
+
+elif cmd=='restart-discern':
+    do_cmd('./RESTART-GUNICORN', ddir="discern")
 
 elif cmd=='activate':
     uname = sys.argv[avcnt]
