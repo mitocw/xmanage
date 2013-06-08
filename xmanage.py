@@ -113,9 +113,9 @@ elif cmd=='logs':
         print "unknown appname %s" % app
         print "known apps: " % appinfo.keys()
         usage()
-        return
-    ai = appinfo[app]
-    bash_command('cd %s/%s; tail %s %s' % (ROOT, ai['dir'], opts, ai['log']))
+    else:
+        ai = appinfo[app]
+        bash_command('cd %s/%s; tail %s %s' % (ROOT, ai['dir'], opts, ai['log']))
 
 elif cmd=='update-mitx':
     bash_command('cd %s/%s; git pull' % (ROOT, DIST))
